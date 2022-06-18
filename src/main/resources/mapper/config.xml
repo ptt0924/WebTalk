@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--        mybatis的主配置文件： 主要定义了数据库的配置信息,sql映射文件的位置-->
+<!--            下面是约束文件-->
+<!DOCTYPE configuration  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!-- configuration 根标签 -->
+    <!--settings：控制mybatis全局行为-->
+    <properties resource="config.xml"/>
+    <settings>
+        <!--设置mybatis输出日志-->
+        <setting value="STDOUT_LOGGING" name="logImpl"/>
+        <setting name="cacheEnabled" value="false" />
+    </settings>
+    <environments default="mydev">
+        <environment id="dev">
+            <transactionManager type="JDBC"/>
+            <dataSource type="org.jgs1904.config.DruidDataSourceFactory">
+                <property name="driverClassName" value="${driver}"/>
+                <property name="url" value="${url}"/>
+                <property name="username" value="${username}"/>
+                <property name="password" value="${password}"/>
+                <property name="initialSize" value="${initialSize}"/>
+                <property name="maxActive" value="${maxActive}"/>
+                <property name="maxWait" value="${maxWait}"/>
+                <property name="poolPreparedStatements" value="${poolPreparedStatements}"/>
+                <property name="maxPoolPreparedStatementPerConnectionSize" value="${maxPoolPreparedStatementPerConnectionSize}"/>
+            </dataSource>
+        </environment>
+        <!--表示线上的数据库，是项目真实使用的库-->
+        <!--        <environment id="online">-->
+        <!--            <transactionManager type="JDBC"/>-->
+        <!--            <dataSource type="POOLED">-->
+        <!--                <property value="com.mysql.cj.jdbc.Driver" name="driver"/>-->
+        <!--                <property value="jdbc:mysql://localhost:3306/onlinedb" name="url"/>-->
+        <!--                <property value="root" name="username"/>-->
+        <!--                <property value="fhwertwr" name="password"/>-->
+        <!--            </dataSource>-->
+        <!--        </environment>-->
+    </environments>
+
+    <mappers>
+        <!--一个mapper标签指定一个文件的位置。从类路径开始的路径信息。 target/clasess(类路径) -->
+        <mapper resource="mapper/UserDao.xml"/>
+        <mapper resource="mapper/FriendsDao.xml"/>
+        <mapper resource="mapper/UserMessageDao.xml"/>
+        <mapper resource="mapper/AddFriendDao.xml"/>
+    </mappers>
+</configuration>

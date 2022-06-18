@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.application.dao.FriendsDao">
+  <resultMap id="BaseResultMap" type="com.application.entity.Friends">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_account" jdbcType="INTEGER" property="userAccount" />
+    <result column="friend_account" jdbcType="INTEGER" property="friendAccount" />
+    <result column="time" jdbcType="TIMESTAMP" property="time" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="read_time" jdbcType="TIMESTAMP" property="readTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, user_account, friend_account, `time`, remark, read_time
+  </sql>
+  <select flushCache="true" id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from friends
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from friends
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.application.entity.Friends" useGeneratedKeys="true">
+    insert into friends (user_account, friend_account, `time`, 
+      remark, read_time)
+    values (#{record.userAccount},#{record.friendAccount},#{record.time},#{record.remark},#{record.readTime})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.application.entity.Friends" useGeneratedKeys="true">
+    insert into friends
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userAccount != null">
+        user_account,
+      </if>
+      <if test="friendAccount != null">
+        friend_account,
+      </if>
+      <if test="time != null">
+        `time`,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="readTime != null">
+        read_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userAccount != null">
+        #{userAccount,jdbcType=INTEGER},
+      </if>
+      <if test="friendAccount != null">
+        #{friendAccount,jdbcType=INTEGER},
+      </if>
+      <if test="time != null">
+        #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="readTime != null">
+        #{readTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.application.entity.Friends">
+    update friends
+    <set>
+      <if test="userAccount != null">
+        user_account = #{userAccount,jdbcType=INTEGER},
+      </if>
+      <if test="friendAccount != null">
+        friend_account = #{friendAccount,jdbcType=INTEGER},
+      </if>
+      <if test="time != null">
+        `time` = #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="readTime != null">
+        read_time = #{readTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.application.entity.Friends">
+    update friends
+    set user_account = #{userAccount,jdbcType=INTEGER},
+      friend_account = #{friendAccount,jdbcType=INTEGER},
+      `time` = #{time,jdbcType=TIMESTAMP},
+      remark = #{remark,jdbcType=VARCHAR},
+      read_time = #{readTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select flushCache="true" id="getAllFriends" resultMap="BaseResultMap" parameterType="integer">
+    select * from friends where user_account = #{userAccount}
+  </select>
+
+  <update id="updateFriends">
+    update friends set remark =#{remark} where user_account = #{from} and friend_account = #{to}
+  </update>
+
+
+</mapper>

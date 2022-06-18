@@ -1,0 +1,6 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="webtalk">
+    <output-path>$PROJECT_DIR$/out/artifacts/webtalk</output-path>
+    <root id="root" />
+  </artifact>
+</component>
